@@ -153,6 +153,7 @@ Option<int> irHeight("dolphin_ir_pitch", "Wiimote IR Total Pitch",
      {"85", 85}, {"86", 86}, {"87", 87}, {"88", 88}, {"89", 89}, {"90", 90}, {"91", 91}, {"92", 92}, {"93", 93}, {"94", 94},
      {"95", 95}, {"96", 96}, {"97", 97}, {"98", 98}, {"99", 99}, {"100", 100}, {"0", 0}, {"1", 1}, {"2", 2}, {"3", 3},
      {"4", 4}, {"5", 5}, {"6", 6}, {"7", 7}, {"8", 8}, {"9", 9}, {"10", 10}, {"11", 11}, {"12", 12}, {"13", 13}, {"14", 14}});
+Option<bool> altGCPorts("dolphin_alt_gc_ports_on_wii", "Use ports 5-8 for GameCube controllers in Wii mode", false);
 Option<Common::Log::LOG_LEVELS> logLevel("dolphin_log_level", "Log Level", {
   {"Info", Common::Log::LINFO},
 #if defined(_DEBUG) || defined(DEBUGFAST)
