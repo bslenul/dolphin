@@ -89,10 +89,14 @@ private:
   std::vector<std::pair<std::string, T>> m_list;
 };
 
-extern Option<int> irMode;
 extern Option<int> irCenter;
 extern Option<int> irWidth;
 extern Option<int> irHeight;
+extern Option<int> leftAnalog;
+extern Option<int> rightAnalogMouse;
+extern Option<int> swingDistance;
+extern Option<int> swingSpeed;
+extern Option<int> swingReturnSpeed;
 extern Option<bool> altGCPorts;
 extern Option<int> efbScale;
 extern Option<Common::Log::LOG_LEVELS> logLevel;

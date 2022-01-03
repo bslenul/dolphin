@@ -232,8 +232,10 @@ void retro_run(void)
     Libretro::environ_cb(RETRO_ENVIRONMENT_SET_GEOMETRY, &info);
   }
 
-  if (Libretro::Options::irMode.Updated() || Libretro::Options::irCenter.Updated()
-      || Libretro::Options::irWidth.Updated() || Libretro::Options::irHeight.Updated())
+  if (Libretro::Options::irCenter.Updated() || Libretro::Options::irWidth.Updated()
+      || Libretro::Options::irHeight.Updated() || Libretro::Options::leftAnalog.Updated()
+      || Libretro::Options::rightAnalogMouse.Updated() || Libretro::Options::swingSpeed.Updated()
+      || Libretro::Options::swingReturnSpeed.Updated() || Libretro::Options::swingDistance.Updated())
   {
     Libretro::Input::ResetControllers();
   }
