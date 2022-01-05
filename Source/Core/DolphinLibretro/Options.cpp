@@ -112,9 +112,62 @@ Option<bool>::Option(const char* id, const char* name, bool initial) : m_id(id),
   Register();
 }
 
-Option<int> efbScale("dolphin_efb_scale", "EFB Scale", 1,
+Option<std::string> renderer("dolphin_renderer", "Renderer", {"Hardware", "Software"
+#if defined(_DEBUG) || defined(DEBUGFAST)
+    , "Null"
+#endif
+});
+Option<int> efbScale("dolphin_efb_scale", "Internal Resolution", 1,
                      {"x1 (640 x 528)", "x2 (1280 x 1056)", "x3 (1920 x 1584)", "x4 (2560 x 2112)",
                       "x5 (3200 x 2640)", "x6 (3840 x 3168)"});
+Option<bool> Widescreen("dolphin_widescreen", "Widescreen (Wii)", true);
+Option<bool> WidescreenHack("dolphin_widescreen_hack", "WideScreen Hack", false);
+Option<ShaderCompilationMode> shaderCompilationMode(
+    "dolphin_shader_compilation_mode", "Shader Compilation Mode",
+    {{"sync", ShaderCompilationMode::Synchronous},
+     {"a-sync Skip Rendering", ShaderCompilationMode::AsynchronousSkipRendering},
+     {"sync UberShaders", ShaderCompilationMode::SynchronousUberShaders},
+     {"a-sync UberShaders", ShaderCompilationMode::AsynchronousUberShaders}});
+Option<bool> waitForShaders("dolphin_wait_for_shaders", "Wait for Shaders before Starting", false);
+Option<bool> progressiveScan("dolphin_progressive_scan", "Progressive Scan", true);
+Option<bool> pal60("dolphin_pal60", "PAL60", true);
+Option<int> maxAnisotropy("dolphin_max_anisotropy", "Max Anisotropy", {"1x", "2x", "4x", "8x", "16x"});
+Option<bool> efbScaledCopy("dolphin_efb_scaled_copy", "Scaled EFB Copy", true);
+Option<bool> forceTextureFiltering("dolphin_force_texture_filtering", "Force Texture Filtering", false);
+Option<bool> efbToTexture("dolphin_efb_to_texture", "Store EFB Copies on GPU", true);
+Option<int> textureCacheAccuracy("dolphin_texture_cache_accuracy", "Texture Cache Accuracy",
+                                 {{"Fast", 128}, {"Middle", 512}, {"Safe", 0}});
+Option<bool> gpuTextureDecoding("dolphin_gpu_texture_decoding", "GPU Texture Decoding", false);
+Option<bool> fastDepthCalc("dolphin_fast_depth_calculation", "Fast Depth Calculation", true);
+Option<bool> bboxEnabled("dolphin_bbox_enabled", "Bounding Box Emulation", false);
+Option<bool> efbToVram("dolphin_efb_to_vram", "Disable EFB to VRAM", false);
+Option<bool> loadCustomTextures("dolphin_load_custom_textures", "Load Custom Textures", false);
+Option<PowerPC::CPUCore> cpu_core("dolphin_cpu_core", "CPU Core",
+                                  {
+#ifdef _M_X86
+                                  {"JIT64", PowerPC::CPUCore::JIT64},
+#elif _M_ARM_64
+                                  {"JITARM64", PowerPC::CPUCore::JITARM64},
+#endif
+                                  {"Interpreter", PowerPC::CPUCore::Interpreter},
+                                  {"Cached Interpreter", PowerPC::CPUCore::CachedInterpreter}});
+Option<float> cpuClockRate("dolphin_cpu_clock_rate", "CPU Clock Rate",
+                           {{"100%", 1.0},
+                            {"150%", 1.5},
+                            {"200%", 2.0},
+                            {"250%", 2.5},
+                            {"300%", 3.0},
+                            {"5%", 0.05},
+                            {"10%", 0.1},
+                            {"20%", 0.2},
+                            {"30%", 0.3},
+                            {"40%", 0.4},
+                            {"50%", 0.5},
+                            {"60%", 0.6},
+                            {"70%", 0.7},
+                            {"80%", 0.8},
+                            {"90%", 0.9}});
+Option<bool> fastmem("dolphin_fastmem", "Fastmem", true);
 Option<int> leftAnalog("dolphin_left_analog", "Left Analog Default Function (Wiimote only)",
                         {"Tilt", "Swing"});
 Option<int> rightAnalogMouse("dolphin_right_analog_mouse", "Right Analog Default Function and Mouse",
@@ -175,46 +228,15 @@ Option<int> swingReturnSpeed("dolphin_swing_return_speed", "Wiimote Swing Return
      {"13", 13}, {"14", 14}, {"15", 15}, {"16", 16}, {"17", 17}, {"18", 18}, {"19", 19}, {"20", 20}, {"21", 21}, {"22", 22},
      {"23", 23}, {"24", 24}, {"25", 25}, {"26", 26}, {"27", 27}, {"28", 28}, {"29", 29}, {"30", 30}, {"31", 31}, {"32", 32},
      {"33", 33}, {"34", 34}, {"35", 35}, {"36", 36}, {"37", 37}, {"38", 38}, {"39", 39}, {"40", 40}, {"1", 1}});
+Option<bool> enableRumble("dolphin_enable_rumble", "Rumble", true);
+Option<u32> sensorBarPosition("dolphin_sensor_bar_position", "Sensor Bar Position",
+                              {"Bottom", "Top"});
+Option<bool> WiimoteContinuousScanning("dolphin_wiimote_continuous_scanning", "Wiimote Continuous Scanning", false);
 Option<bool> altGCPorts("dolphin_alt_gc_ports_on_wii", "Use ports 5-8 for GameCube controllers in Wii mode", false);
-Option<Common::Log::LOG_LEVELS> logLevel("dolphin_log_level", "Log Level", {
-  {"Info", Common::Log::LINFO},
-#if defined(_DEBUG) || defined(DEBUGFAST)
-      {"Debug", Common::Log::LDEBUG},
-#endif
-      {"Notice", Common::Log::LNOTICE}, {"Error", Common::Log::LERROR},
-  {
-    "Warning", Common::Log::LWARNING
-  }
-});
-Option<float> cpuClockRate("dolphin_cpu_clock_rate", "CPU Clock Rate",
-                           {{"100%", 1.0},
-                            {"150%", 1.5},
-                            {"200%", 2.0},
-                            {"250%", 2.5},
-                            {"300%", 3.0},
-                            {"5%", 0.05},
-                            {"10%", 0.1},
-                            {"20%", 0.2},
-                            {"30%", 0.3},
-                            {"40%", 0.4},
-                            {"50%", 0.5},
-                            {"60%", 0.6},
-                            {"70%", 0.7},
-                            {"80%", 0.8},
-                            {"90%", 0.9}});
-Option<std::string> renderer("dolphin_renderer", "Renderer", {"Hardware", "Software", "Null"});
-Option<bool> fastmem("dolphin_fastmem", "Fastmem", true);
+Option<unsigned int> audioMixerRate("dolphin_mixer_rate", "Audio Mixer Rate",
+                                    {{"32000", 32000u}, {"48000", 48000u}});
 Option<bool> DSPHLE("dolphin_dsp_hle", "DSP HLE", true);
 Option<bool> DSPEnableJIT("dolphin_dsp_jit", "DSP Enable JIT", true);
-Option<PowerPC::CPUCore> cpu_core("dolphin_cpu_core", "CPU Core",
-                                  {
-#ifdef _M_X86
-                                      {"JIT64", PowerPC::CPUCore::JIT64},
-#elif _M_ARM_64
-                                      {"JITARM64", PowerPC::CPUCore::JITARM64},
-#endif
-                                      {"Interpreter", PowerPC::CPUCore::Interpreter},
-                                      {"Cached Interpreter", PowerPC::CPUCore::CachedInterpreter}});
 Option<DiscIO::Language> Language("dolphin_language", "Language",
                                   {{"English", DiscIO::Language::English},
                                    {"Japanese", DiscIO::Language::Japanese},
@@ -226,34 +248,15 @@ Option<DiscIO::Language> Language("dolphin_language", "Language",
                                    {"Simplified Chinese", DiscIO::Language::SimplifiedChinese},
                                    {"Traditional Chinese", DiscIO::Language::TraditionalChinese},
                                    {"Korean", DiscIO::Language::Korean}});
-Option<bool> Widescreen("dolphin_widescreen", "Widescreen", true);
-Option<bool> WidescreenHack("dolphin_widescreen_hack", "WideScreen Hack", false);
-Option<bool> progressiveScan("dolphin_progressive_scan", "Progressive Scan", true);
-Option<bool> pal60("dolphin_pal60", "PAL60", true);
-Option<u32> sensorBarPosition("dolphin_sensor_bar_position", "Sensor Bar Position",
-                              {"Bottom", "Top"});
-Option<bool> WiimoteContinuousScanning("dolphin_wiimote_continuous_scanning", "Wiimote Continuous Scanning", false);
-Option<unsigned int> audioMixerRate("dolphin_mixer_rate", "Audio Mixer Rate",
-                                    {{"32000", 32000u}, {"48000", 48000u}});
-Option<ShaderCompilationMode> shaderCompilationMode(
-    "dolphin_shader_compilation_mode", "Shader Compilation Mode",
-    {{"sync", ShaderCompilationMode::Synchronous},
-     {"a-sync Skip Rendering", ShaderCompilationMode::AsynchronousSkipRendering},
-     {"sync UberShaders", ShaderCompilationMode::SynchronousUberShaders},
-     {"a-sync UberShaders", ShaderCompilationMode::AsynchronousUberShaders}});
-Option<int> maxAnisotropy("dolphin_max_anisotropy", "Max Anisotropy", {"1x", "2x", "4x", "8x", "16x"});
-Option<bool> efbScaledCopy("dolphin_efb_scaled_copy", "Scaled EFB Copy", true);
-Option<bool> efbToTexture("dolphin_efb_to_texture", "Store EFB Copies on GPU", true);
-Option<bool> efbToVram("dolphin_efb_to_vram", "Disable EFB to VRAM", false);
-Option<bool> fastDepthCalc("dolphin_fast_depth_calculation", "Fast Depth Calculation", true);
-Option<bool> bboxEnabled("dolphin_bbox_enabled", "Bounding Box Emulation", false);
-Option<bool> gpuTextureDecoding("dolphin_gpu_texture_decoding", "GPU Texture Decoding", false);
-Option<bool> waitForShaders("dolphin_wait_for_shaders", "Wait for Shaders before Starting", false);
-Option<bool> forceTextureFiltering("dolphin_force_texture_filtering", "Force Texture Filtering", false);
-Option<bool> loadCustomTextures("dolphin_load_custom_textures", "Load Custom Textures", false);
 Option<bool> cheatsEnabled("dolphin_cheats_enabled", "Internal Cheats Enabled", false);
-Option<int> textureCacheAccuracy("dolphin_texture_cache_accuracy", "Texture Cache Accuracy",
-                                 {{"Fast", 128}, {"Middle", 512}, {"Safe", 0}});
 Option<bool> osdEnabled("dolphin_osd_enabled", "OSD Enabled", true);
+Option<Common::Log::LOG_LEVELS> logLevel("dolphin_log_level", "Log Level", {
+                                         {"Info", Common::Log::LINFO},
+#if defined(_DEBUG) || defined(DEBUGFAST)
+                                         {"Debug", Common::Log::LDEBUG},
+#endif
+                                         {"Notice", Common::Log::LNOTICE},
+                                         {"Error", Common::Log::LERROR},
+                                         {"Warning", Common::Log::LWARNING}});
 }  // namespace Options
 }  // namespace Libretro

@@ -235,7 +235,8 @@ void retro_run(void)
   if (Libretro::Options::irCenter.Updated() || Libretro::Options::irWidth.Updated()
       || Libretro::Options::irHeight.Updated() || Libretro::Options::leftAnalog.Updated()
       || Libretro::Options::rightAnalogMouse.Updated() || Libretro::Options::swingSpeed.Updated()
-      || Libretro::Options::swingReturnSpeed.Updated() || Libretro::Options::swingDistance.Updated())
+      || Libretro::Options::swingReturnSpeed.Updated() || Libretro::Options::swingDistance.Updated()
+      || Libretro::Options::enableRumble.Updated())
   {
     Libretro::Input::ResetControllers();
   }
