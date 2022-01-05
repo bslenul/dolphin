@@ -1,0 +1,48 @@
+name: CMake
+
+on:
+  push:
+    branches:
+      - tilt-swing-improvements
+
+jobs:
+  build:
+    name: ${{matrix.config.name}}
+    runs-on: ${{matrix.config.os}}
+
+    strategy:
+      matrix:
+        config:
+          - {name: x86_64-pc-linux, os: ubuntu-latest, cmakeArgs: -DLIBRETRO=ON -DCMAKE_BUILD_TYPE=Release}
+          - {name: x86_64-pc-windows, os: windows-latest, cmakeArgs: -DLIBRETRO=ON -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -A x64}
+
+    steps:
+
+    - name: Set up build environment (ubuntu-latest)
+      run: |
+        sudo apt update
+        sudo apt install -y ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libevdev-dev libudev-dev libxrandr-dev libxi-dev libpangocairo-1.0-0 qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qtbase5-private-dev
+      if: matrix.config.os == 'ubuntu-latest'
+
+    - uses: actions/checkout@v2
+
+    - name: Configure CMake
+      run: cmake -B build ${{matrix.config.cmakeArgs}}
+
+    - name: Build
+      run: cmake --build build --target dolphin_libretro --config Release
+
+    - name: Create artifact directory
+      run: mkdir -p build/artifact
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: dolphin-${{matrix.config.name}}
+        path: build/dolphin_libretro.so
+      if: matrix.config.os == 'ubuntu-latest'
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: dolphin-${{matrix.config.name}}
+        path: Binary/dolphin_libretro.dll
+      if: matrix.config.os == 'windows-latest'
