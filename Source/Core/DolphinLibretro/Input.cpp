@@ -138,14 +138,21 @@ static struct retro_input_descriptor descWiimote[] = {
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_A, "A"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X, "1"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y, "2"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L2, "Tilt/Swing (Hold)"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R2, "Shake Wiimote"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START, "+"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT, "-"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L, "Sideways Toggle"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R, "Upright Toggle"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R3, "Home"},
     {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_X,
-     "Tilt Left/Right"},
+     "Left Analog Function X"},
     {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_Y,
-     "Tilt Forward/Backward"},
+     "Left Analog Function Y"},
+    {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_X,
+     "Right Analog Function X"},
+    {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_Y,
+     "Right Analog Function Y"},
     {0},
 };
 
@@ -158,14 +165,21 @@ static struct retro_input_descriptor descWiimoteSideways[] = {
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_A, "2"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X, "A"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y, "B"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L2, "Tilt/Swing (Hold)"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R2, "Shake Wiimote"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START, "+"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT, "-"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L, "Sideways Toggle"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R, "Upright Toggle"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R3, "Home"},
     {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_X,
-     "Tilt Left/Right"},
+     "Left Analog Function X"},
     {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_Y,
-     "Tilt Forward/Backward"},
+     "Left Analog Function Y"},
+    {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_X,
+     "Right Analog Function X"},
+    {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_Y,
+     "Right Analog Function Y"},
     {0},
 };
 
@@ -180,19 +194,20 @@ static struct retro_input_descriptor descWiimoteNunchuk[] = {
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y, "Z"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L, "-"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R, "+"},
-    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R2, "Shake Wiimote"},
-    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L2, "Shake Nunchuk"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L2, "Tilt (Hold)"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R2, "Swing (Hold)"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START, "1"},
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT, "2"},
-    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R3, "Home"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L3, "Shake Nunchuk"},
+    {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R3, "Shake Wiimote"},
     {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_X,
      "Nunchuk Stick X"},
     {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_Y,
      "Nunchuk Stick Y"},
     {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_X,
-     "Tilt Left/Right"},
+     "Right Analog Function X"},
     {0, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_Y,
-     "Tilt Forward/Backward"},
+     "Right Analog Function Y"},
     {0},
 };
 
@@ -648,17 +663,21 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
       ControllerEmu::ControlGroup* wmIR = wm->GetWiimoteGroup(WiimoteGroup::Point);
       ControllerEmu::ControlGroup* wmShake = wm->GetWiimoteGroup(WiimoteGroup::Shake);
       ControllerEmu::ControlGroup* wmTilt = wm->GetWiimoteGroup(WiimoteGroup::Tilt);
-#if 0
       ControllerEmu::ControlGroup* wmSwing = wm->GetWiimoteGroup(WiimoteGroup::Swing);
       ControllerEmu::ControlGroup* wmHotkeys = wm->GetWiimoteGroup(WiimoteGroup::Hotkeys);
-#endif
 
+      static_cast<ControllerEmu::NumericSetting<double>*>(wmSwing->numeric_settings[1].get())
+          ->SetValue(Libretro::Options::swingDistance);     // Swing Distance
+      static_cast<ControllerEmu::NumericSetting<double>*>(wmSwing->numeric_settings[2].get())
+          ->SetValue(Libretro::Options::swingSpeed);        // Swing Speed
+      static_cast<ControllerEmu::NumericSetting<double>*>(wmSwing->numeric_settings[3].get())
+          ->SetValue(Libretro::Options::swingReturnSpeed);  // Swing Return Speed
       static_cast<ControllerEmu::NumericSetting<double>*>(wmIR->numeric_settings[1].get())
-        ->SetValue(Libretro::Options::irCenter); // IR Vertical Offset
+        ->SetValue(Libretro::Options::irCenter); // Point Vertical Offset
       static_cast<ControllerEmu::NumericSetting<double>*>(wmIR->numeric_settings[2].get())
-        ->SetValue(Libretro::Options::irWidth);  // IR Total Yaw
+        ->SetValue(Libretro::Options::irWidth);  // Point Total Yaw
       static_cast<ControllerEmu::NumericSetting<double>*>(wmIR->numeric_settings[3].get())
-        ->SetValue(Libretro::Options::irHeight); // IR Total Pitch
+        ->SetValue(Libretro::Options::irHeight); // Point Total Pitch
 
       if (device == RETRO_DEVICE_WIIMOTE_NC)
       {
@@ -676,9 +695,9 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
         ncStick->SetControlExpression(1, "`" + devAnalog + ":Y0+`");         // Down
         ncStick->SetControlExpression(2, "`" + devAnalog + ":X0-`");         // Left
         ncStick->SetControlExpression(3, "`" + devAnalog + ":X0+`");         // Right
-        ncShake->SetControlExpression(0, "L2 | `" + devMouse + ":Middle`");  // Nunchuk shake X
-        ncShake->SetControlExpression(1, "L2 | `" + devMouse + ":Middle`");  // Nunchuk shake Y
-        ncShake->SetControlExpression(2, "L2 | `" + devMouse + ":Middle`");  // Nunchuk shake Z
+        ncShake->SetControlExpression(0, "L3 | `" + devMouse + ":Middle`");  // Nunchuk shake X
+        ncShake->SetControlExpression(1, "L3 | `" + devMouse + ":Middle`");  // Nunchuk shake Y
+        ncShake->SetControlExpression(2, "L3 | `" + devMouse + ":Middle`");  // Nunchuk shake Z
 
         wmButtons->SetControlExpression(0, "A | `" + devMouse + ":Left`");   // A
         wmButtons->SetControlExpression(1, "B | `" + devMouse + ":Right`");  // B
@@ -687,13 +706,79 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
         wmButtons->SetControlExpression(4, "L");                             // -
         wmButtons->SetControlExpression(5, "R");                             // +
 
-        if (Libretro::Options::irMode != 1 && Libretro::Options::irMode != 2)
+        /* Right analog and mouse function
+         * If not in mouse mode, holding L2 changes to tilt mode and R2 changes to swing mode
+         * 0 = point absolute
+         * 1 = point relative
+         * 2 = tilt
+         * 3 = swing
+         * 4 = point (mouse) */
+        if (Libretro::Options::rightAnalogMouse == 0 || Libretro::Options::rightAnalogMouse == 1)
         {
-          wmTilt->SetControlExpression(0, "`" + devAnalog + ":Y1-`");  // Forward
-          wmTilt->SetControlExpression(1, "`" + devAnalog + ":Y1+`");  // Backward
-          wmTilt->SetControlExpression(2, "`" + devAnalog + ":X1-`");  // Left
-          wmTilt->SetControlExpression(3, "`" + devAnalog + ":X1+`");  // Right
+          wmIR->SetControlExpression(0, "!L2 & !R2 & `" + devAnalog + ":Y1-`");     // Point Up
+          wmIR->SetControlExpression(1, "!L2 & !R2 & `" + devAnalog + ":Y1+`");     // Point Down
+          wmIR->SetControlExpression(2, "!L2 & !R2 & `" + devAnalog + ":X1-`");     // Point Left
+          wmIR->SetControlExpression(3, "!L2 & !R2 & `" + devAnalog + ":X1+`");     // Point Right
+          static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[4].get())
+            ->SetValue(Libretro::Options::rightAnalogMouse == 1);                   // Point Relative input
+          static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[5].get())
+            ->SetValue(true);                                                       // Point Auto hide
+
+          wmTilt->SetControlExpression(0, "L2 & !R2 & `" + devAnalog + ":Y1-`");    // Tilt Forward
+          wmTilt->SetControlExpression(1, "L2 & !R2 & `" + devAnalog + ":Y1+`");    // Tilt Backward
+          wmTilt->SetControlExpression(2, "L2 & !R2 & `" + devAnalog + ":X1-`");    // Tilt Left
+          wmTilt->SetControlExpression(3, "L2 & !R2 & `" + devAnalog + ":X1+`");    // Tilt Right
+
+          wmSwing->SetControlExpression(0, "!L2 & R2 & `" + devAnalog + ":Y1-`");   // Swing Up
+          wmSwing->SetControlExpression(1, "!L2 & R2 & `" + devAnalog + ":Y1+`");   // Swing Down
+          wmSwing->SetControlExpression(2, "!L2 & R2 & `" + devAnalog + ":X1-`");   // Swing Left
+          wmSwing->SetControlExpression(3, "!L2 & R2 & `" + devAnalog + ":X1+`");   // Swing Right
         }
+        else if (Libretro::Options::rightAnalogMouse == 2)
+        {
+          wmTilt->SetControlExpression(0, "!R2 & `" + devAnalog + ":Y1-`");
+          wmTilt->SetControlExpression(1, "!R2 & `" + devAnalog + ":Y1+`");
+          wmTilt->SetControlExpression(2, "!R2 & `" + devAnalog + ":X1-`");
+          wmTilt->SetControlExpression(3, "!R2 & `" + devAnalog + ":X1+`");
+
+          wmSwing->SetControlExpression(0, "!L2 & R2 & `" + devAnalog + ":Y1-`");
+          wmSwing->SetControlExpression(1, "!L2 & R2 & `" + devAnalog + ":Y1+`");
+          wmSwing->SetControlExpression(2, "!L2 & R2 & `" + devAnalog + ":X1-`");
+          wmSwing->SetControlExpression(3, "!L2 & R2 & `" + devAnalog + ":X1+`");
+        }
+        else if (Libretro::Options::rightAnalogMouse == 3)
+        {
+          wmSwing->SetControlExpression(0, "!L2 & `" + devAnalog + ":Y1-`");
+          wmSwing->SetControlExpression(1, "!L2 & `" + devAnalog + ":Y1+`");
+          wmSwing->SetControlExpression(2, "!L2 & `" + devAnalog + ":X1-`");
+          wmSwing->SetControlExpression(3, "!L2 & `" + devAnalog + ":X1+`");
+
+          wmTilt->SetControlExpression(0, "L2 & !R2 & `" + devAnalog + ":Y1-`");
+          wmTilt->SetControlExpression(1, "L2 & !R2 & `" + devAnalog + ":Y1+`");
+          wmTilt->SetControlExpression(2, "L2 & !R2 & `" + devAnalog + ":X1-`");
+          wmTilt->SetControlExpression(3, "L2 & !R2 & `" + devAnalog + ":X1+`");
+        }
+        else if (Libretro::Options::rightAnalogMouse == 4)
+        {
+          wmIR->SetControlExpression(0, "`" + devPointer + ":Y0-`");
+          wmIR->SetControlExpression(1, "`" + devPointer + ":Y0+`");
+          wmIR->SetControlExpression(2, "`" + devPointer + ":X0-`");
+          wmIR->SetControlExpression(3, "`" + devPointer + ":X0+`");
+          static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[4].get())
+            ->SetValue(false);
+          static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[5].get())
+            ->SetValue(false);
+        }
+
+        // If not in mouse mode, L2 + R2 combination is used for the 2 extra swing movements
+        if (Libretro::Options::rightAnalogMouse != 4)
+        {
+          wmSwing->SetControlExpression(4, "L2 & R2 & `" + devAnalog + ":Y1-`");  // Swing Forward
+          wmSwing->SetControlExpression(5, "L2 & R2 & `" + devAnalog + ":Y1+`");  // Swing Backward
+        }
+        wmShake->SetControlExpression(0, "R3 | `" + devMouse + ":Middle`");  // Wiimote shake X
+        wmShake->SetControlExpression(1, "R3 | `" + devMouse + ":Middle`");  // Wiimote shake Y
+        wmShake->SetControlExpression(2, "R3 | `" + devMouse + ":Middle`");  // Wiimote shake Z
       }
       else
       {
@@ -711,51 +796,82 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
           wmButtons->SetControlExpression(2, "B");  // 1
           wmButtons->SetControlExpression(3, "A");  // 2
         }
-        wmTilt->SetControlExpression(0, "`" + devAnalog + ":Y0-`");  // Forward
-        wmTilt->SetControlExpression(1, "`" + devAnalog + ":Y0+`");  // Backward
-        wmTilt->SetControlExpression(2, "`" + devAnalog + ":X0-`");  // Left
-        wmTilt->SetControlExpression(3, "`" + devAnalog + ":X0+`");  // Right
-        wmButtons->SetControlExpression(4, "Select");                // -
-        wmButtons->SetControlExpression(5, "Start");                 // +
-      }
+        wmButtons->SetControlExpression(4, "Select");  // -
+        wmButtons->SetControlExpression(5, "Start");   // +
+        wmButtons->SetControlExpression(6, "R3");      // Home
 
-      wmButtons->SetControlExpression(6, "R3");  // Home
+        /* Left analog default function
+         * Holding L2 changes swing to tilt and vice-versa
+         * 0 = tilt
+         * 1 = swing */
+        if (Libretro::Options::leftAnalog == 0)
+        {
+          wmTilt->SetControlExpression(0, "!L2 & `" + devAnalog + ":Y0-`");  // Tilt Forward
+          wmTilt->SetControlExpression(1, "!L2 & `" + devAnalog + ":Y0+`");  // Tilt Backward
+          wmTilt->SetControlExpression(2, "!L2 & `" + devAnalog + ":X0-`");  // Tilt Left
+          wmTilt->SetControlExpression(3, "!L2 & `" + devAnalog + ":X0+`");  // Tilt Right
+
+          wmSwing->SetControlExpression(0, "L2 & `" + devAnalog + ":Y0-`");  // Swing Up
+          wmSwing->SetControlExpression(1, "L2 & `" + devAnalog + ":Y0+`");  // Swing Down
+          wmSwing->SetControlExpression(2, "L2 & `" + devAnalog + ":X0-`");  // Swing Left
+          wmSwing->SetControlExpression(3, "L2 & `" + devAnalog + ":X0+`");  // Swing Right
+        }
+        else if (Libretro::Options::leftAnalog == 1)
+        {
+          wmSwing->SetControlExpression(0, "!L2 & `" + devAnalog + ":Y0-`");
+          wmSwing->SetControlExpression(1, "!L2 & `" + devAnalog + ":Y0+`");
+          wmSwing->SetControlExpression(2, "!L2 & `" + devAnalog + ":X0-`");
+          wmSwing->SetControlExpression(3, "!L2 & `" + devAnalog + ":X0+`");
+
+          wmTilt->SetControlExpression(0, "L2 & `" + devAnalog + ":Y0-`");
+          wmTilt->SetControlExpression(1, "L2 & `" + devAnalog + ":Y0+`");
+          wmTilt->SetControlExpression(2, "L2 & `" + devAnalog + ":X0-`");
+          wmTilt->SetControlExpression(3, "L2 & `" + devAnalog + ":X0+`");
+        }
+
+        /* Right analog and mouse function
+         * 0 = point absolute
+         * 1 = point relative
+         * 4 = point (mouse) */
+        if (Libretro::Options::rightAnalogMouse == 0 || Libretro::Options::rightAnalogMouse == 1)
+        {
+          wmIR->SetControlExpression(0, "!L2 & `" + devAnalog + ":Y1-`");     // Point Up
+          wmIR->SetControlExpression(1, "!L2 & `" + devAnalog + ":Y1+`");     // Point Down
+          wmIR->SetControlExpression(2, "!L2 & `" + devAnalog + ":X1-`");     // Point Left
+          wmIR->SetControlExpression(3, "!L2 & `" + devAnalog + ":X1+`");     // Point Right
+          static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[4].get())
+            ->SetValue(Libretro::Options::rightAnalogMouse == 1);             // Point Relative input
+          static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[5].get())
+            ->SetValue(true);                                                 // Point Auto hide
+        }
+        else if (Libretro::Options::rightAnalogMouse == 4)
+        {
+          wmIR->SetControlExpression(0, "`" + devPointer + ":Y0-`");
+          wmIR->SetControlExpression(1, "`" + devPointer + ":Y0+`");
+          wmIR->SetControlExpression(2, "`" + devPointer + ":X0-`");
+          wmIR->SetControlExpression(3, "`" + devPointer + ":X0+`");
+          static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[4].get())
+            ->SetValue(false);
+          static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[5].get())
+            ->SetValue(false);
+        }
+        // L2 + up/down on right analog for the 2 extra swing movements
+        wmSwing->SetControlExpression(4, "L2 & `" + devAnalog + ":Y1-`");  // Swing Forward
+        wmSwing->SetControlExpression(5, "L2 & `" + devAnalog + ":Y1+`");  // Swing Backward
+
+        wmShake->SetControlExpression(0, "R2 | `" + devMouse + ":Middle`");  // Wiimote shake X
+        wmShake->SetControlExpression(1, "R2 | `" + devMouse + ":Middle`");  // Wiimote shake Y
+        wmShake->SetControlExpression(2, "R2 | `" + devMouse + ":Middle`");  // Wiimote shake Z
+
+        wmHotkeys->SetControlExpression(0, "L");  // Sideways Toggle
+        wmHotkeys->SetControlExpression(1, "R");  // Upright Toggle
+      }
       wmDPad->SetControlExpression(0, "Up");     // Up
       wmDPad->SetControlExpression(1, "Down");   // Down
       wmDPad->SetControlExpression(2, "Left");   // Left
       wmDPad->SetControlExpression(3, "Right");  // Right
 
-      if (Libretro::Options::irMode == 1 || Libretro::Options::irMode == 2)
-      {
-        // Set right stick to control the IR
-        wmIR->SetControlExpression(0, "`" + devAnalog + ":Y1-`");     // Up
-        wmIR->SetControlExpression(1, "`" + devAnalog + ":Y1+`");     // Down
-        wmIR->SetControlExpression(2, "`" + devAnalog + ":X1-`");     // Left
-        wmIR->SetControlExpression(3, "`" + devAnalog + ":X1+`");     // Right
-        static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[4].get())
-          ->SetValue(Libretro::Options::irMode == 1);                 // Relative input
-        static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[5].get())
-          ->SetValue(true);                                           // Auto hide
-      }
-      else
-      {
-        // Mouse controls IR
-        wmIR->SetControlExpression(0, "`" + devPointer + ":Y0-`");    // Up
-        wmIR->SetControlExpression(1, "`" + devPointer + ":Y0+`");    // Down
-        wmIR->SetControlExpression(2, "`" + devPointer + ":X0-`");    // Left
-        wmIR->SetControlExpression(3, "`" + devPointer + ":X0+`");    // Right
-        static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[4].get())
-          ->SetValue(false);                                          // Relative input
-        static_cast<ControllerEmu::NumericSetting<bool>*>(wmIR->numeric_settings[5].get())
-          ->SetValue(false);                                          // Auto hide
-      }
-
-      wmShake->SetControlExpression(0, "R2 | `" + devMouse + ":Middle`");  // Wiimote shake X
-      wmShake->SetControlExpression(1, "R2 | `" + devMouse + ":Middle`");  // Wiimote shake Y
-      wmShake->SetControlExpression(2, "R2 | `" + devMouse + ":Middle`");  // Wiimote shake Z
 #if 0
-      wmHotkeys->SetControlExpression(0, "");  // Sideways Toggle
-      wmHotkeys->SetControlExpression(1, "");  // Upright Toggle
       wmHotkeys->SetControlExpression(2, "");  // Sideways Hold
       wmHotkeys->SetControlExpression(3, "");  // Upright Hold
 #endif
@@ -843,7 +959,7 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
       continue;
 
     default:
-      if (!SConfig::GetInstance().bWii || port > 3)
+      if (!SConfig::GetInstance().bWii || i > 3)
       {
         desc = Libretro::Input::descGC;
       }
