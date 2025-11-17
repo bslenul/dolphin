@@ -31,6 +31,7 @@
 #include "VideoBackends/OGL/OGLGfx.h"
 #include "VideoCommon/AsyncRequests.h"
 #include "VideoCommon/Fifo.h"
+#include "VideoCommon/Present.h"
 #include "VideoCommon/TextureConfig.h"
 #include "VideoCommon/VideoCommon.h"
 #include "VideoCommon/VideoConfig.h"
@@ -62,6 +63,7 @@ namespace Libretro
 {
 extern retro_environment_t environ_cb;
 static bool widescreen;
+static bool is_pal;
 }  // namespace Libretro
 
 extern "C" {
@@ -132,6 +134,9 @@ void retro_reset(void)
 
 void retro_run(void)
 {
+  bool update_av_info = false;
+  bool update_geometry = false;
+
   Libretro::Options::CheckForUpdatedVariables();
   Libretro::FrameTiming::CheckForFastForwarding();
 #if defined(_DEBUG)
@@ -212,21 +217,41 @@ void retro_run(void)
     g_Config.iEFBScale = Libretro::Options::GetCached<int>(
       Libretro::Options::gfx_settings::EFB_SCALE);
 
-    unsigned cmd = RETRO_ENVIRONMENT_SET_SYSTEM_AV_INFO;
     if (Libretro::Video::hw_render.context_type == RETRO_HW_CONTEXT_D3D11 ||
         Libretro::Video::hw_render.context_type == RETRO_HW_CONTEXT_D3D12)
-      cmd = RETRO_ENVIRONMENT_SET_GEOMETRY;
-    retro_system_av_info info;
-    retro_get_system_av_info(&info);
-    Libretro::environ_cb(cmd, &info);
+      update_geometry = true;
+    else
+      update_av_info = true;
+  }
+
+  // Some GC PAL games have a 60Hz mode (and some are even 60Hz only)
+  // so we might have to update the refresh rate from 50 to 59.94Hz,
+  // and the PAL60 setting is not guaranteed to work with all Wii PAL
+  // games so we might need to adjust from 59.94 to 50Hz.
+  // Check VI display register directly to get the requested format,
+  // it might be off at launch so let's delay a bit before checking
+  // to avoid unnecessay refresh rate changes.
+  if (g_presenter && g_presenter->FrameCount() > 0)
+  {
+    const bool pal = system.GetVideoInterface().IsPAL();
+    if (Libretro::is_pal != pal)
+    {
+      Libretro::is_pal = pal;
+      update_av_info = true;
+    }
   }
 
   if (g_widescreen &&
       Libretro::widescreen != (g_widescreen->IsGameWidescreen() || g_Config.bWidescreenHack))
+    update_geometry = true;
+
+  if (update_av_info || update_geometry)
   {
+    const unsigned cmd = update_av_info ? RETRO_ENVIRONMENT_SET_SYSTEM_AV_INFO
+                                        : RETRO_ENVIRONMENT_SET_GEOMETRY;
     retro_system_av_info info;
     retro_get_system_av_info(&info);
-    Libretro::environ_cb(RETRO_ENVIRONMENT_SET_GEOMETRY, &info);
+    Libretro::environ_cb(cmd, &info);
   }
 
   if (Libretro::Options::IsUpdated(Libretro::Options::wiimote::IR_MODE) ||
@@ -322,11 +347,13 @@ bool retro_unserialize(const void* data, size_t size)
 
 unsigned retro_get_region(void)
 {
-  if (DiscIO::IsNTSC(SConfig::GetInstance().m_region) ||
-      (Core::System::GetInstance().IsWii() && Config::Get(Config::SYSCONF_PAL60)))
-    return RETRO_REGION_NTSC;
+  // Set default based on disc region and PAL60 setting on boot,
+  // after that is_pal will be updated in retro_run when needed
+  if (!g_presenter || g_presenter->FrameCount() <= 0)
+    Libretro::is_pal = !DiscIO::IsNTSC(SConfig::GetInstance().m_region) &&
+                       !(Core::System::GetInstance().IsWii() && Config::Get(Config::SYSCONF_PAL60));
 
-  return RETRO_REGION_PAL;
+  return Libretro::is_pal ? RETRO_REGION_PAL : RETRO_REGION_NTSC;
 }
 
 unsigned retro_api_version()

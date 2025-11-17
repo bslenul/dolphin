@@ -400,6 +400,10 @@ public:
   // Create a fake VI mode for a fifolog
   void FakeVIUpdate(u32 xfb_address, u32 fb_width, u32 fb_stride, u32 fb_height);
 
+#ifdef __LIBRETRO__
+  bool IsPAL() { return m_display_control_register.FMT == 1; }
+#endif
+
 private:
   u32 GetHalfLinesPerEvenField() const;
   u32 GetHalfLinesPerOddField() const;

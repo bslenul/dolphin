@@ -428,9 +428,9 @@ static struct retro_core_option_v2_definition option_defs[] = {
   },
   {
     Libretro::Options::sysconf::PAL60,
-    "System Configuration > PAL60 Mode",
-    "PAL60 Mode",
-    "Enable 60Hz for PAL games.",
+    "System Configuration > PAL60 Mode (Wii)",
+    "PAL60 Mode (Wii)",
+    "Enable 60Hz for PAL Wii games. Not compatible with all games.",
     nullptr,
     CATEGORY_SYSCONF,
     {
